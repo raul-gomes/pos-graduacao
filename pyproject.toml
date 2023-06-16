@@ -11,11 +11,19 @@ python = ">=3.10,<3.12"
 pandas = "^1.5.3"
 bokeh = "^3.1.0"
 matplotlib = "^3.7.1"
-seaborn = "^0.12.2"
+seaborn = {extras = ["stats"], version = "^0.12.2"}
 scikit-learn = "^1.2.2"
 nltk = "^3.8.1"
 wordcloud = "^1.8.2.2"
 tensorflow = "^2.12.0"
+random-word = "^1.0.11"
+plotly = "^5.14.1"
+ipykernel = "^6.23.1"
+nbformat = "^5.8.0"
+beautifulsoup4 = "^4.12.2"
+requests = "^2.31.0"
+urllib3 = "^2.0.2"
+selenium = "^4.9.1"
 
 
 [tool.poetry.group.dev.dependencies]

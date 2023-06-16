@@ -193,3 +193,8 @@ pyrightconfig.json
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/python,visualstudiocode
+
+LICENSE.chromedriver
+chromedriver.exe
+chromedriver_win32.zip
+chromedriver_win32.zip:Zone.Identifier

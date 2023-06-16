@@ -1,0 +1,82 @@
+-- Create tables
+CREATE TABLE ALUNOS ( 
+	ID_ALUNO                   INTEGER PRIMARY key AUTOINCREMENT,
+	NOME_ALUNO                 VARCHAR2(150),
+	CPF						   INTEGER,
+  	DATA_CADASTRO			   TIMESTAMP,
+  	UNIQUE (CPF)
+ );
+
+CREATE TABLE DISCIPLINAS ( 
+	ID_DISCIPLINA             INTEGER PRIMARY key AUTOINCREMENT,
+	NOME_DISCIPLINA           VARCHAR(150),
+	NOME_PROFESSOR            VARCHAR(150),
+	DATA_CADASTRO             TIMESTAMP
+ );
+
+CREATE TABLE ALUNO_DISCIPLINA ( 
+	ID                   	  INTEGER PRIMARY key AUTOINCREMENT,
+	ID_ALUNO             	  INTEGER,
+	ID_DISCIPLINA        	  INTEGER,
+  	DATA_CADASTRO             TIMESTAMP,
+    CONSTRAINT FK_ALUNO FOREIGN KEY (ID_ALUNO) REFERENCES ALUNOS (ID_ALUNO),
+  	CONSTRAINT FK_DISCIPLINA FOREIGN KEY (ID_DISCIPLINA) REFERENCES DISCIPLINAS (ID_DISCIPLINA)
+ );
+ 
+ -- Insert values into the tables
+ INSERT INTO ALUNOS (nome_aluno, cpf, data_cadastro) 
+ VALUES
+ 	("Xuoronau", "28188544310", CURRENT_TIMESTAMP),
+    ("Celebvavo", "11544281250", CURRENT_TIMESTAMP),
+    ("Antu", "17008240317", CURRENT_TIMESTAMP),
+    ("Hihen", "16127170125", CURRENT_TIMESTAMP),
+    ("Bruidaemiu", "82592816780", CURRENT_TIMESTAMP),
+    ("Penyo", "66029299689", CURRENT_TIMESTAMP),
+    ("Senoriel", "58525140635", CURRENT_TIMESTAMP),
+    ("Belegreylia", "70754536882", CURRENT_TIMESTAMP),
+    ("Elvao", "97488104889", CURRENT_TIMESTAMP),
+    ("Neheseo", "68547560300", CURRENT_TIMESTAMP);
+ 
+ INSERT INTO DISCIPLINAS (nome_disciplina, nome_professor, data_cadastro) 
+ VALUES
+ 	("Física", "Cindy M. Garcia", CURRENT_TIMESTAMP),
+    ("Química", "Charles J. Sanchez", CURRENT_TIMESTAMP),
+    ("Matemática", "Lynn J. Reaves", CURRENT_TIMESTAMP),
+    ("Historia", "Debbie A. Bowman", CURRENT_TIMESTAMP);
+  
+INSERT INTO ALUNO_DISCIPLINA (id_aluno, id_disciplina, data_cadastro) 
+VALUES
+ 	(2, 1, CURRENT_TIMESTAMP),
+    (1, 2, CURRENT_TIMESTAMP),
+    (5, 4, CURRENT_TIMESTAMP),
+    (6, 3, CURRENT_TIMESTAMP),
+    (8, 1, CURRENT_TIMESTAMP),
+    (9, 4, CURRENT_TIMESTAMP);
+
+
+-- Select data from tables
+SELECT * from ALUNOS;
+SELECT * from DISCIPLINAS;
+SELECT * from ALUNO_DISCIPLINA;
+
+-- Select alunos from a unique discipline
+select ALUNOS.nome_aluno, DISCIPLINAS.nome_disciplina, ALUNO_DISCIPLINA.DATA_CADASTRO
+from ALUNOS, ALUNO_DISCIPLINA, DISCIPLINAS
+WHERE ALUNOS.ID_ALUNO == ALUNO_DISCIPLINA.ID_ALUNO AND
+	DISCIPLINAS.id_disciplina == ALUNO_DISCIPLINA.ID_DISCIPLINA AND
+    DISCIPLINAS.nome_disciplina == "Física"
+ORDER BY ALUNOS.DATA_CADASTRO DESC
+
+-- Select students that doesn't in any course
+SELECT ALUNOS.NOME_ALUNO, ALUNO_DISCIPLINA.ID_DISCIPLINA
+from ALUNOS
+left join ALUNO_DISCIPLINA
+on ALUNO_DISCIPLINA.ID_ALUNO == ALUNOS.id_aluno
+where ALUNO_DISCIPLINA.id_disciplina is NULL
+
+-- Delete students that doesn't in any course
+DELETE ALUNOS
+from ALUNOS
+left join ALUNO_DISCIPLINA
+on ALUNO_DISCIPLINA.ID_ALUNO == ALUNOS.id_aluno
+where ALUNO_DISCIPLINA.id_disciplina is NULL
